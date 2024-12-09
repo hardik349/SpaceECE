@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SpaceECE"
         tools:targetApi="31">
         <activity
+            android:name=".ChampionDetails"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
