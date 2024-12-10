@@ -1,6 +1,5 @@
 package com.example.spaceece
 
-import PilotLandingScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,10 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spaceece.feature_parent_auth.presentation.components.AuthScreen
+import com.example.spaceece.feature_parent_auth.presentation.components.ConfirmOtpScreen
+import com.example.spaceece.feature_parent_auth.presentation.components.SelectRoleScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.SplashScreen
-import com.example.spaceece.pilot_screen.SignupScreen
 import com.example.spaceece.ui.theme.SpaceECETheme
-import com.example.spaceecepackage.AppointmentListScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,31 +28,37 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = Screens.SplashScreen.name){
                         SplashScreen(
-                            onChampionClicked = {
-                                navController.navigate(Screens.ChampionScreen.name)
+                            onLanguageButtonClicked = {},
+                            onDefaultLanguageClicked = {},
+                            onNextButtonClicked = {
+                                navController.navigate(Screens.SelectRoleScreen.name)
+
+                            }
+                        )
+                    }
+
+                    composable(route = Screens.SelectRoleScreen.name){
+                        SelectRoleScreen(
+                            onBackLanguageClicked = {
+                                navController.popBackStack()
                             },
-                            onPilotClicked = {
-                                navController.navigate(Screens.SignupScreen.name)
-                            }
-                        )
-
-                    }
-
-                    composable(route = Screens.SignupScreen.name) {
-                        SignupScreen(
-                            onSignupButtonClicked = {
-                                navController.navigate(Screens.PilotDetailScreen.name)
-                            }
+                            onBeginButtonClicked = {
+                                navController.navigate(Screens.AuthScreen.name)
+                            },
+                            onRoleButtonClicked = {}
                         )
                     }
 
-                    composable(route = Screens.ChampionScreen.name){
-                        AppointmentListScreen()
-
+                    composable(route = Screens.AuthScreen.name){
+                        AuthScreen(
+                            onSendButtonClicked = {
+                                navController.navigate(Screens.ConfirmOtpScreen.name)
+                            }
+                        )
                     }
 
-                    composable(route = Screens.PilotDetailScreen.name) {
-                        PilotLandingScreen()
+                    composable(route = Screens.ConfirmOtpScreen.name){
+                        ConfirmOtpScreen()
                     }
 
                 }
@@ -65,7 +71,7 @@ class MainActivity : ComponentActivity() {
 
 enum class Screens{
     SplashScreen,
-    SignupScreen,
-    ChampionScreen,
-    PilotDetailScreen
+    SelectRoleScreen,
+    AuthScreen,
+    ConfirmOtpScreen,
 }
