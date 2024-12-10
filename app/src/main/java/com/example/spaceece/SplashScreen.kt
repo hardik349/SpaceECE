@@ -32,7 +32,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SplashScreen(
-    modifier : Modifier = Modifier
+    modifier : Modifier = Modifier,
+    onChampionClicked : () -> Unit,
+    onPilotClicked : () -> Unit
 ){
 
     Column(
@@ -51,14 +53,14 @@ fun SplashScreen(
         Spacer(modifier = Modifier.height(140.dp))
         Box(
             modifier = Modifier
-                .size(width = 300.dp, height = 50.dp)
+                .size(width = 300.dp, height = 45.dp)
                 .clip(RoundedCornerShape(100.dp))
                 .background(Color(0xFFFF9800))
-                .clickable { }
+                .clickable { onChampionClicked()}
         ){
             Text(
-                text = "CHAMPIANS",
-                fontSize = 22.sp,
+                text = "CHAMPIONS",
+                fontSize = 18.sp,
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold,
                 modifier = modifier
@@ -68,16 +70,16 @@ fun SplashScreen(
         Spacer(modifier = Modifier.height(30.dp))
         Box(
             modifier = Modifier
-                .size(width = 300.dp, height = 50.dp)
+                .size(width = 300.dp, height = 45.dp)
                 .border(2.dp,Color(0xFFFF9800),RoundedCornerShape(100.dp))
 
                 .background(Color.White)
 
-                .clickable { }
+                .clickable { onPilotClicked() }
         ){
             Text(
                 text = "PILOT",
-                fontSize = 22.sp,
+                fontSize = 18.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.SemiBold,
                 modifier = modifier
@@ -95,5 +97,8 @@ fun SplashScreen(
 @Preview(showBackground = true)
 @Composable
 fun SplashScreenPreview(){
-    SplashScreen()
+    SplashScreen(
+        onChampionClicked = {},
+        onPilotClicked = {}
+    )
 }

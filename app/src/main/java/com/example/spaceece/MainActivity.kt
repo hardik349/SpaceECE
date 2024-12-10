@@ -11,37 +11,57 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.spaceece.pilot_screen.SignupScreen
 import com.example.spaceece.ui.theme.SpaceECETheme
+import com.example.spaceecepackage.AppointmentListScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+            val navController = rememberNavController()
             SpaceECETheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavHost(
+                    navController = navController ,
+                    startDestination = Screens.SplashScreen.name
+                ) {
+
+                    composable(route = Screens.SplashScreen.name){
+                        SplashScreen(
+                            onChampionClicked = {
+                                navController.navigate(Screens.ChampionScreen.name)
+                            },
+                            onPilotClicked = {
+                                navController.navigate(Screens.SignupScreen.name)
+                            }
+                        )
+
+                    }
+
+                    composable(route = Screens.SignupScreen.name) {
+                        SignupScreen()
+                    }
+
+                    composable(route = Screens.ChampionScreen.name){
+                        AppointmentListScreen()
+
+                    }
+
                 }
+
+
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SpaceECETheme {
-        Greeting("Android")
-    }
+enum class Screens{
+    SplashScreen,
+    SignupScreen,
+    ChampionScreen
 }

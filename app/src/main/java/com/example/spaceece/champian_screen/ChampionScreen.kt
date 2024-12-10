@@ -1,12 +1,10 @@
 package com.example.spaceecepackage
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -37,10 +35,10 @@ fun AppointmentListScreen() {
         Text(
             text = "Champion",
             style = MaterialTheme.typography.headlineMedium.copy(
-                fontSize = 55.sp,
+                fontSize = 35.sp,
                 fontWeight = FontWeight.Bold),
             color = Color.Black.copy(alpha = 0.7f),
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(top = 10.dp,bottom = 16.dp)
         )
 
         LazyColumn(
