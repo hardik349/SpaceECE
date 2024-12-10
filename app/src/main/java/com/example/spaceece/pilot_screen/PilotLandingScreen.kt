@@ -35,6 +35,7 @@ fun PilotLandingScreen() {
     var childName by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
     var childAge by remember { mutableStateOf("") }
+    var address by remember { mutableStateOf("") }
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     var profilePicture by remember { mutableStateOf<Bitmap?>(null) }
 
@@ -93,7 +94,7 @@ fun PilotLandingScreen() {
             }
 
             Text(
-                text = "Child Details",
+                text = "Child's Details",
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -126,6 +127,15 @@ fun PilotLandingScreen() {
                 shape = RoundedCornerShape(8.dp)
             )
 
+            OutlinedTextField(
+                value = address,
+                onValueChange = { address = it },
+                label = { Text("Enter your address") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                shape = RoundedCornerShape(8.dp)
+            )
+
 
             //val calendar = Calendar.getInstance()
             val datePickerDialog = android.app.DatePickerDialog(
@@ -133,10 +143,13 @@ fun PilotLandingScreen() {
                 { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
                     selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
                 },
-                selectedDate.year,
+                selectedDate.dayOfMonth,
                 selectedDate.monthValue - 1,
-                selectedDate.dayOfMonth
+                selectedDate.year
             )
+
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = { datePickerDialog.show()  },
@@ -144,7 +157,8 @@ fun PilotLandingScreen() {
                     containerColor = Color(0xFFFF9800)
                 ),
             ) {
-                Text(text = "Selected Date: $selectedDate")
+                Text(text = "Selected Date: $selectedDate",
+                    color = Color.White)
             }
 
             Button(
@@ -154,7 +168,7 @@ fun PilotLandingScreen() {
                     contentColor = Color.White
                 ),
             ) {
-                Text("Book Now", fontSize = 18.sp)
+                Text("Book Now", fontSize = 20.sp)
             }
         }
     }
