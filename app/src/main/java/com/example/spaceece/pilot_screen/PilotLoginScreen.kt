@@ -20,7 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignupScreen() {
+fun SignupScreen(
+    onSignupButtonClicked : () -> Unit
+) {
     var phoneNumber by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
 
@@ -116,7 +118,7 @@ fun SignupScreen() {
 
         Button(
             onClick = {
-
+                onSignupButtonClicked()
             },
             modifier = Modifier
                 .height(50.dp),
@@ -138,5 +140,7 @@ fun SignupScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignupScreen() {
-    SignupScreen()
+    SignupScreen(
+        onSignupButtonClicked = {}
+    )
 }

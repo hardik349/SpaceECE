@@ -1,5 +1,6 @@
 package com.example.spaceece
 
+import PilotLandingScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,12 +45,20 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(route = Screens.SignupScreen.name) {
-                        SignupScreen()
+                        SignupScreen(
+                            onSignupButtonClicked = {
+                                navController.navigate(Screens.PilotDetailScreen.name)
+                            }
+                        )
                     }
 
                     composable(route = Screens.ChampionScreen.name){
                         AppointmentListScreen()
 
+                    }
+
+                    composable(route = Screens.PilotDetailScreen.name) {
+                        PilotLandingScreen()
                     }
 
                 }
@@ -63,5 +72,6 @@ class MainActivity : ComponentActivity() {
 enum class Screens{
     SplashScreen,
     SignupScreen,
-    ChampionScreen
+    ChampionScreen,
+    PilotDetailScreen
 }
