@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
+import java.util.Calendar
 
 @Composable
 fun PilotLandingScreen() {
@@ -125,8 +127,20 @@ fun PilotLandingScreen() {
                 shape = RoundedCornerShape(8.dp)
             )
 
+
+            //val calendar = Calendar.getInstance()
+            val datePickerDialog = android.app.DatePickerDialog(
+                context,
+                { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                    selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+                },
+                selectedDate.year,
+                selectedDate.monthValue - 1,
+                selectedDate.dayOfMonth
+            )
+
             Button(
-                onClick = { /* Open date picker if needed */ },
+                onClick = { datePickerDialog.show()  },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF9800)
                 ),
