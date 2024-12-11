@@ -13,11 +13,13 @@ import com.example.spaceece.feature_parent_auth.presentation.components.SelectRo
 import com.example.spaceece.feature_parent_auth.presentation.components.SplashScreen
 import com.example.spaceece.feature_parent_details.presentation.components.ChildDetailsScreen
 import com.example.spaceece.ui.theme.SpaceECETheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
         setContent {
 
             val navController = rememberNavController()
@@ -52,14 +54,24 @@ class MainActivity : ComponentActivity() {
 
                     composable(route = Screens.AuthScreen.name){
                         AuthScreen(
-                            onSendButtonClicked = {
+                            onLoginSuccessful = {
+                                navController.navigate(Screens.SelectRoleScreen.name)
+                            },
+                            onLoginUnSuccessful = {
                                 navController.navigate(Screens.ConfirmOtpScreen.name)
                             }
                         )
                     }
 
                     composable(route = Screens.ConfirmOtpScreen.name){
-                        ConfirmOtpScreen(navController = navController)
+                        ConfirmOtpScreen(
+                            onRegistrationSuccessful = {
+                                navController.navigate(Screens.SelectRoleScreen.name)
+                            },
+                            onBackToLogin = {
+                                navController.navigate(Screens.AuthScreen.name)
+                            }
+                        )
                     }
 
                     composable(route = Screens.ChildDetailsScreen.name) {
@@ -67,7 +79,6 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }
-
 
             }
         }
