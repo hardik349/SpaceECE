@@ -11,6 +11,7 @@ import com.example.spaceece.feature_parent_auth.presentation.components.AuthScre
 import com.example.spaceece.feature_parent_auth.presentation.components.ConfirmOtpScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.SelectRoleScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.SplashScreen
+import com.example.spaceece.feature_parent_details.presentation.components.ChildDetailsScreen
 import com.example.spaceece.ui.theme.SpaceECETheme
 
 class MainActivity : ComponentActivity() {
@@ -61,6 +62,10 @@ class MainActivity : ComponentActivity() {
                         ConfirmOtpScreen(navController = navController)
                     }
 
+                    composable(route = Screens.ChildDetailsScreen.name) {
+                        ChildDetailsScreen()
+                    }
+
                 }
 
 
@@ -74,4 +79,5 @@ enum class Screens{
     SelectRoleScreen,
     AuthScreen,
     ConfirmOtpScreen,
+    ChildDetailsScreen
 }

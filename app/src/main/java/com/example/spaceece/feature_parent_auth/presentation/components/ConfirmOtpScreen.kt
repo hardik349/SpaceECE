@@ -158,7 +158,7 @@ fun ConfirmOtpScreen(
                         if (otp == "123456") {
                             showError = false
                             // Navigate to next screen
-                            navController.navigate(Screens.SelectRoleScreen.name)
+                            navController.navigate(Screens.ChildDetailsScreen.name)
                         } else {
                             showError = true
                         }
