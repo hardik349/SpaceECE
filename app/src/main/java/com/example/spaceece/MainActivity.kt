@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screens.AuthScreen.name){
                         AuthScreen(
                             onLoginSuccessful = {
-                                navController.navigate(Screens.ChildDetailseScreen.name)
+                                navController.navigate(Screens.ChildDetailsScreen.name)
                             },
                             onLoginUnSuccessful = {
                                 navController.navigate(Screens.ConfirmOtpScreen.name)
