@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screens.AuthScreen.name){
                         AuthScreen(
                             onLoginSuccessful = {
-                                navController.navigate(Screens.SelectRoleScreen.name)
+                                navController.navigate(Screens.ChildDetailseScreen.name)
                             },
                             onLoginUnSuccessful = {
                                 navController.navigate(Screens.ConfirmOtpScreen.name)
@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screens.ConfirmOtpScreen.name){
                         ConfirmOtpScreen(
                             onRegistrationSuccessful = {
-                                navController.navigate(Screens.SelectRoleScreen.name)
+                                navController.navigate(Screens.ChildDetailsScreen.name)
                             },
                             onBackToLogin = {
                                 navController.navigate(Screens.AuthScreen.name)
