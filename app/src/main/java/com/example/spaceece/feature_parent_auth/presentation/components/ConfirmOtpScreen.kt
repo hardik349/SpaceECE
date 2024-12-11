@@ -17,13 +17,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -45,18 +45,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.spaceece.R
+import com.example.spaceece.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConfirmOtpScreen(
-    modifier : Modifier = Modifier
-){
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     var phoneNumber by remember { mutableStateOf("") }
     var otp by remember { mutableStateOf("") }
+    var showError by remember { mutableStateOf(false) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        //verticalArrangement = Arrangement.Center,
         modifier = modifier
             .fillMaxSize()
             .background(Color.White)
@@ -66,7 +71,6 @@ fun ConfirmOtpScreen(
             contentDescription = null,
             modifier = modifier
                 .padding(top = 30.dp)
-            //.size(200.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -89,18 +93,12 @@ fun ConfirmOtpScreen(
         Box(
             modifier = Modifier
                 .size(width = 350.dp, height = 55.dp)
-                .clip(
-                    RoundedCornerShape(
-                        10.dp
-                    )
-                )
+                .clip(RoundedCornerShape(10.dp))
                 .background(Color(0xFFFFA500))
                 .border(
                     2.dp,
                     Color.Black,
-                    RoundedCornerShape(
-                        10.dp
-                    )
+                    RoundedCornerShape(10.dp)
                 )
         ) {
             TextField(
@@ -110,16 +108,13 @@ fun ConfirmOtpScreen(
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     focusedTextColor = Color.Black,
-                   // containerColor = Color.Transparent
                 ),
                 placeholder = { Text(text = "123456789") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
                 modifier = modifier
                     .fillMaxWidth()
-
             )
-
         }
         Spacer(modifier = Modifier.height(40.dp))
         Row(
@@ -129,9 +124,7 @@ fun ConfirmOtpScreen(
             Box(
                 modifier = Modifier
                     .size(width = 160.dp, height = 50.dp)
-                    .clip(
-                        RoundedCornerShape(30.dp)
-                    )
+                    .clip(RoundedCornerShape(30.dp))
                     .background(Color(0xFFCBF5F1))
                     .border(
                         2.dp,
@@ -139,7 +132,7 @@ fun ConfirmOtpScreen(
                         RoundedCornerShape(30.dp)
                     )
                     .clickable { }
-            ){
+            ) {
                 Text(
                     text = "Resend OTP",
                     fontSize = 18.sp,
@@ -153,17 +146,24 @@ fun ConfirmOtpScreen(
             Box(
                 modifier = Modifier
                     .size(width = 160.dp, height = 50.dp)
-                    .clip(
-                        RoundedCornerShape(30.dp)
-                    )
+                    .clip(RoundedCornerShape(30.dp))
                     .background(Color(0xFFFFA500))
                     .border(
                         2.dp,
                         Color.Black,
                         RoundedCornerShape(30.dp)
                     )
-                    .clickable { }
-            ){
+                    .clickable {
+                        println(otp)
+                        if (otp == "123456") {
+                            showError = false
+                            // Navigate to next screen
+                            navController.navigate(Screens.SelectRoleScreen.name)
+                        } else {
+                            showError = true
+                        }
+                    }
+            ) {
                 Row(
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -190,14 +190,20 @@ fun ConfirmOtpScreen(
                                 .size(15.dp)
                                 .align(Alignment.Center)
                         )
-
                     }
-
-
                 }
-
             }
         }
+
+        // Error message display
+        if (showError) {
+            Text(
+                text = "Incorrect OTP. Please try again.",
+                color = Color.Red,
+                modifier = Modifier.padding(top = 10.dp)
+            )
+        }
+
         Spacer(modifier = modifier.height(40.dp))
         Text(
             text = "Enter OTP",
@@ -209,59 +215,55 @@ fun ConfirmOtpScreen(
         )
         Spacer(modifier = modifier.height(10.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) {
-            OtpBox(
-                text = otp.getOrNull(0)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 0) + it + otp.substring(1)
-                    }
-                }
-            )
-            OtpBox(
-                text = otp.getOrNull(1)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 1) + it + otp.substring(2)
-                    }
-                }
-            )
-            OtpBox(
-                text = otp.getOrNull(2)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 2) + it + otp.substring(3)
-                    }
-                }
-            )
-            OtpBox(
-                text = otp.getOrNull(3)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 3) + it + otp.substring(4)
-                    }
-                }
-            )
-            OtpBox(
-                text = otp.getOrNull(4)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 4) + it + otp.substring(5)
-                    }
-                }
-            )
-            OtpBox(
-                text = otp.getOrNull(5)?.toString() ?: "",
-                onTextChanged = {
-                    if (it.length <= 1) {
-                        otp = otp.substring(0, 5) + it
-                    }
-                }
-            )
+        // var otp by remember { mutableStateOf("") }
+
+        fun updateOTP(newInput: String) {
+            if (newInput.length <= 6) {
+                otp = newInput
+            }
         }
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 32.dp)
+        ) {
+            for (i in 0 until 6) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .border(2.dp, Color(0xFFFFA500), RoundedCornerShape(8.dp))
+                        .background(Color(0xFFFFA500), RoundedCornerShape(8.dp))
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    val char = if (i < otp.length) otp[i].toString() else ""
+                    BasicTextField(
+                        value = char,
+                        onValueChange = { newInput ->
+                            val updated = otp.toMutableList()
+                            if (newInput.isNotEmpty() && i < updated.size) {
+                                updated[i] = newInput.first()
+                            } else if (newInput.isNotEmpty()) {
+                                updated.add(newInput.first())
+                            }
+                            updateOTP(updated.joinToString(""))
+                        },
+                        textStyle = TextStyle(
+                            color = Color.White,
+                            fontSize = 24.sp,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                        ),
+                        singleLine = true,
+                        maxLines = 1,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+        }
+
+
         Spacer(modifier = modifier.height(70.dp))
         Image(
             painter = painterResource(R.drawable.splash_image),
@@ -269,7 +271,6 @@ fun ConfirmOtpScreen(
             modifier = modifier.scale(1.25f)
         )
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -278,15 +279,19 @@ fun OtpBox(
     text: String,
     onTextChanged: (String) -> Unit,
 ) {
-
     TextField(
-        value = text,
-        onValueChange =onTextChanged,
-        colors = TextFieldDefaults.textFieldColors(
 
+        value = text,
+        onValueChange = { newValue ->
+            // Only update if the new value is a single digit
+            if (newValue.length <= 1 && newValue.all { it.isDigit() }) {
+                onTextChanged(newValue)
+            }
+        },
+        colors = TextFieldDefaults.textFieldColors(
             containerColor = Color.Transparent
         ),
-        placeholder = { Text(text = "123456789") },
+        placeholder = { Text(text = "0") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
         modifier = Modifier
@@ -305,6 +310,7 @@ fun OtpBox(
 
 @Preview(showBackground = true)
 @Composable
-fun ConfirmOtpScreenPreview(){
-    ConfirmOtpScreen()
+fun ConfirmOtpScreenPreview() {
+    val navController = rememberNavController()
+    ConfirmOtpScreen(navController = navController)
 }
