@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(route = Screens.ConfirmOtpScreen.name){
-                        ConfirmOtpScreen()
+                        ConfirmOtpScreen(navController = navController)
                     }
 
                 }
