@@ -7,11 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spaceece.champian_screen.components.ChampionDashboard
 import com.example.spaceece.feature_parent_auth.presentation.components.AuthScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.ConfirmOtpScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.SelectRoleScreen
 import com.example.spaceece.feature_parent_auth.presentation.components.SplashScreen
 import com.example.spaceece.feature_parent_details.presentation.components.ChildDetailsScreen
+import com.example.spaceece.pilot_screen.ChampionLoginScreen
 import com.example.spaceece.ui.theme.SpaceECETheme
 import com.google.firebase.FirebaseApp
 
@@ -45,10 +47,12 @@ class MainActivity : ComponentActivity() {
                             onBackLanguageClicked = {
                                 navController.popBackStack()
                             },
-                            onBeginButtonClicked = {
-                                navController.navigate(Screens.AuthScreen.name)
+                            onBeginButtonClicked = {selectedRole ->
+                                when(selectedRole){
+                                    "Parent" -> navController.navigate(Screens.AuthScreen.name)
+                                    "Champion" -> navController.navigate(Screens.ChampionLoginScreen.name)
+                                }
                             },
-                            onRoleButtonClicked = {}
                         )
                     }
 
@@ -78,6 +82,17 @@ class MainActivity : ComponentActivity() {
                         ChildDetailsScreen()
                     }
 
+                    composable(route = Screens.ChampionLoginScreen.name) {
+                        ChampionLoginScreen(
+                            onLoginButtonClicked = { navController.navigate(Screens.ChampionDashboardScreen.name) },
+                            onForgotPasswordClicked = {}
+                        )
+                    }
+
+                    composable(route = Screens.ChampionDashboardScreen.name) {
+                        ChampionDashboard()
+                    }
+
                 }
 
             }
@@ -90,5 +105,7 @@ enum class Screens{
     SelectRoleScreen,
     AuthScreen,
     ConfirmOtpScreen,
-    ChildDetailsScreen
+    ChildDetailsScreen,
+    ChampionLoginScreen,
+    ChampionDashboardScreen
 }

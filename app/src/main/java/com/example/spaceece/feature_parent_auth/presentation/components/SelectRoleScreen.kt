@@ -47,10 +47,10 @@ import com.example.spaceece.R
 @Composable
 fun SelectRoleScreen(
     modifier : Modifier = Modifier,
-    onRoleButtonClicked : () -> Unit,
     onBackLanguageClicked : () -> Unit,
-    onBeginButtonClicked : () -> Unit
+    onBeginButtonClicked : (String) -> Unit
 ){
+    var selectedRole by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +90,10 @@ fun SelectRoleScreen(
                 .padding(start = 20.dp)
         )
         Spacer(modifier = Modifier.height(5.dp))
-        RoleDropDown()
+        RoleDropDown(
+            selectedRole = selectedRole,
+            onRoleSelected = {selectedRole = it}
+        )
         Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = "Welcome!",
@@ -140,7 +143,7 @@ fun SelectRoleScreen(
                         Color.Black,
                         RoundedCornerShape(30.dp)
                     )
-                    .clickable { onBeginButtonClicked() }
+                    .clickable { onBeginButtonClicked(selectedRole) }
             ){
                 Row(
                     modifier = Modifier
@@ -182,10 +185,11 @@ fun SelectRoleScreen(
 
 @Composable
 fun RoleDropDown(
+    selectedRole : String,
+    onRoleSelected : (String) -> Unit
 
 ){
     var expanded by remember { mutableStateOf(false) }
-    var selectedRole by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -265,14 +269,14 @@ fun RoleDropDown(
             DropdownMenuItem(
                 text = { Text(text = "Parent")},
                 onClick = {
-                    selectedRole ="Parent"
+                    onRoleSelected("Parent")
                     expanded = false
                 }
             )
             DropdownMenuItem(
                 text = { Text(text = "Champion")},
                 onClick = {
-                    selectedRole ="Champion"
+                    onRoleSelected("Champion")
                     expanded = false
                 }
             )
@@ -287,7 +291,6 @@ fun RoleDropDown(
 @Composable
 fun SelectRoleScreenPreview(){
     SelectRoleScreen(
-        onRoleButtonClicked = {},
         onBackLanguageClicked = {},
         onBeginButtonClicked = {}
     )

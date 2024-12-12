@@ -57,9 +57,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
     implementation ("com.google.firebase:firebase-core:21.1.0")
+    //implementation("com.google.firebase:firebase-firestore-ktx:26.0.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation ("androidx.compose.material:material-icons-extended:1.5.4")
 
+    implementation(libs.firebase.firestore.ktx)
     // dependency to add calender
     implementation("androidx.compose.material:material:1.7.5")
     implementation("com.google.android.material:material:1.12.0")
