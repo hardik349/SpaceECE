@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -53,36 +54,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.spaceece.R
 import okio.IOException
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChildDetailsScreen(
     modifier: Modifier = Modifier
-){
+) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-    var imageBitmap by remember{mutableStateOf<ImageBitmap?>(null)}
+    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ){ uri ->
+    ) { uri ->
         selectedImageUri = uri
         uri?.let {
             try {
                 val inputStream = context.contentResolver.openInputStream(it)
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 imageBitmap = bitmap.asImageBitmap()
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
 
-    var childName by remember{ mutableStateOf("") }
-    var birthDate by remember{ mutableStateOf("") }
+    var childName by remember { mutableStateOf("") }
+    var birthDate by remember { mutableStateOf("") }
+    var selectedDate by remember { mutableStateOf<Date?>(null) }
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         //verticalArrangement = Arrangement.Center,
@@ -149,7 +156,7 @@ fun ChildDetailsScreen(
                             contentScale = ContentScale.Crop,
                             modifier = modifier.fillMaxSize()
                         )
-                    } ?: run{
+                    } ?: run {
                         Image(
                             painter = painterResource(R.drawable.add_a_photo),
                             contentDescription = null,
@@ -188,7 +195,7 @@ fun ChildDetailsScreen(
                                     10.dp
                                 )
                             )
-                    ){
+                    ) {
                         TextField(
                             value = childName,
                             onValueChange = {
@@ -230,7 +237,8 @@ fun ChildDetailsScreen(
                                     10.dp
                                 )
                             )
-                    ){
+                    ) {
+
                         TextField(
                             value = birthDate,
                             onValueChange = {
@@ -247,6 +255,17 @@ fun ChildDetailsScreen(
                                 .background(Color(0xFFFFA500))
                         )
 
+                        Icon(
+                            imageVector = Icons.Default.CalendarMonth,
+                            contentDescription = null,
+                            modifier = modifier
+                                .align(Alignment.BottomEnd)
+                                .size(40.dp)
+                                .padding(end = 5.dp, bottom = 7.dp)
+                                .clickable { }
+                        )
+
+
                     }
 
                 }
@@ -259,8 +278,9 @@ fun ChildDetailsScreen(
     }
     Box(
         modifier = modifier
-            .fillMaxSize().padding(end = 10.dp, bottom = 10.dp)
-    ){
+            .fillMaxSize()
+            .padding(end = 10.dp, bottom = 10.dp)
+    ) {
         Box(
             modifier = Modifier
                 .size(width = 150.dp, height = 60.dp)
@@ -272,9 +292,10 @@ fun ChildDetailsScreen(
                     2.dp,
                     Color.Black,
                     RoundedCornerShape(30.dp)
-                ).align(Alignment.BottomEnd)
-                .clickable {  }
-        ){
+                )
+                .align(Alignment.BottomEnd)
+                .clickable { }
+        ) {
             Row(
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -297,7 +318,8 @@ fun ChildDetailsScreen(
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
-                        modifier = Modifier.size(15.dp)
+                        modifier = Modifier
+                            .size(15.dp)
                             .align(Alignment.Center)
                     )
 
@@ -313,7 +335,7 @@ fun ChildDetailsScreen(
 @Composable
 fun ParentDetails(
 
-){
+) {
     val text = "Fields with a \"*\" after them are mandatory"
     var applicantName by remember { mutableStateOf("") }
     var spouseName by remember { mutableStateOf("") }
@@ -326,7 +348,7 @@ fun ParentDetails(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 15.dp)
-    ){
+    ) {
         Text(
             text = "Add your Details",
             fontSize = 22.sp,
@@ -366,7 +388,7 @@ fun ParentDetails(
                         10.dp
                     )
                 )
-        ){
+        ) {
             TextField(
                 value = applicantName,
                 onValueChange = {
@@ -376,7 +398,7 @@ fun ParentDetails(
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.background(Color(0xFFFFA500))
+                //.background(Color(0xFFFFA500))
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -404,7 +426,7 @@ fun ParentDetails(
                         10.dp
                     )
                 )
-        ){
+        ) {
             TextField(
                 value = spouseName,
                 onValueChange = {
@@ -443,7 +465,7 @@ fun ParentDetails(
                         10.dp
                     )
                 )
-        ){
+        ) {
             TextField(
                 value = applicantEmailId,
                 onValueChange = {
@@ -482,7 +504,7 @@ fun ParentDetails(
                         10.dp
                     )
                 )
-        ){
+        ) {
             TextField(
                 value = applicantPhoneNumber,
                 onValueChange = {
@@ -521,7 +543,7 @@ fun ParentDetails(
                         10.dp
                     )
                 )
-        ){
+        ) {
             TextField(
                 value = alternateNumber,
                 onValueChange = {
@@ -538,8 +560,9 @@ fun ParentDetails(
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun ChildDetailsScreenPreview(){
+fun ChildDetailsScreenPreview() {
     ChildDetailsScreen()
 }
