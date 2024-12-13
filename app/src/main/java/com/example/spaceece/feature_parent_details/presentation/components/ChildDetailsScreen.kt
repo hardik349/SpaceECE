@@ -1,4 +1,4 @@
-package com.example.spaceece.feature_parent_details.presentation.components
+package com.example.spaceece.feature_parent_details.presentation.components;
 
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -57,11 +57,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import okio.IOException
 
-
 data class Child(
     val name: String,
     val birthDate: String,
-)
+);
 data class Parent(
     val applicantName: String,
     val spouseName: String?,
@@ -80,7 +79,7 @@ fun ChildDetailsScreen(
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null); }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -95,11 +94,11 @@ fun ChildDetailsScreen(
                 e.printStackTrace()
             }
         }
-    }
+    };
 
     // Child Details State Variables
-    var childName by remember { mutableStateOf("") }
-    var birthDate by remember { mutableStateOf("") }
+    var childName by remember { mutableStateOf(""); }
+    var birthDate by remember { mutableStateOf(""); }
 
     // Parent Details State Variables
     var applicantName by remember { mutableStateOf("") }
@@ -120,14 +119,14 @@ fun ChildDetailsScreen(
             painter = painterResource(R.drawable.logo),
             contentDescription = null,
             modifier = modifier.padding(top = 30.dp)
-        )
+        );
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Home Learning Made Easy",
             fontSize = 23.sp,
             fontWeight = FontWeight.Light,
             style = MaterialTheme.typography.displayLarge
-        )
+        );
         Spacer(modifier = Modifier.height(40.dp))
 
         // Child Details Section
@@ -144,7 +143,7 @@ fun ChildDetailsScreen(
                 modifier = modifier
                     .align(Alignment.Center)
                     .padding(20.dp)
-            )
+            );
         }
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -173,7 +172,7 @@ fun ChildDetailsScreen(
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = modifier.fillMaxSize()
-                        )
+                        );
                     } ?: run {
                         Image(
                             painter = painterResource(R.drawable.add_a_photo),
@@ -181,9 +180,9 @@ fun ChildDetailsScreen(
                             modifier = modifier
                                 .size(50.dp)
                                 .align(Alignment.Center)
-                        )
+                        );
                     }
-                }
+                };
 
                 // Child Name and Birth Date Inputs
                 Column(
@@ -196,7 +195,7 @@ fun ChildDetailsScreen(
                         fontSize = 13.sp,
                         style = MaterialTheme.typography.displayLarge,
                         modifier = Modifier.align(Alignment.Start)
-                    )
+                    );
                     Spacer(modifier = Modifier.height(5.dp))
                     Box(
                         modifier = Modifier
@@ -207,7 +206,7 @@ fun ChildDetailsScreen(
                     ) {
                         TextField(
                             value = childName,
-                            onValueChange = { childName = it },
+                            onValueChange = { childName = it; },
                             colors = TextFieldDefaults.textFieldColors(
                                 focusedTextColor = Color.Black,
                                 containerColor = Color(0xFFFFA500)
@@ -215,8 +214,8 @@ fun ChildDetailsScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             singleLine = true,
                             modifier = modifier.fillMaxWidth()
-                        )
-                    }
+                        );
+                    };
 
                     // Birth Date Input
                     Spacer(modifier = modifier.height(20.dp))
@@ -225,7 +224,7 @@ fun ChildDetailsScreen(
                         fontSize = 13.sp,
                         style = MaterialTheme.typography.displayLarge,
                         modifier = Modifier.align(Alignment.Start)
-                    )
+                    );
                     Spacer(modifier = Modifier.height(5.dp))
                     Box(
                         modifier = Modifier
@@ -236,7 +235,7 @@ fun ChildDetailsScreen(
                     ) {
                         TextField(
                             value = birthDate,
-                            onValueChange = { birthDate = it },
+                            onValueChange = { birthDate = it; },
                             colors = TextFieldDefaults.textFieldColors(
                                 focusedTextColor = Color.Black,
                                 containerColor = Color(0xFFFFA500)
@@ -244,11 +243,11 @@ fun ChildDetailsScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             singleLine = true,
                             modifier = modifier.fillMaxWidth()
-                        )
-                    }
-                }
-            }
-        }
+                        );
+                    };
+                };
+            };
+        };
 
         Spacer(modifier = modifier.height(30.dp))
 
@@ -265,14 +264,14 @@ fun ChildDetailsScreen(
                 fontWeight = FontWeight.SemiBold,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "Fields with a \"*\" after them are mandatory",
                 fontSize = 15.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
 
             // Applicant Name Input
             Spacer(modifier = Modifier.height(12.dp))
@@ -281,98 +280,98 @@ fun ChildDetailsScreen(
                 fontSize = 13.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = applicantName,
-                onValueChange = { applicantName = it },
+                onValueChange = { applicantName = it; },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFFFA500))
                     .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true
-            )
+            );
 
-// Spouse Name Input
+            // Spouse Name Input
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Spouse Name",
                 fontSize = 13.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = spouseName ?: "",
-                onValueChange = { spouseName = it },
+                onValueChange = { spouseName = it; },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFFFA500))
                     .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true
-            )
+            );
 
-// Email Input
+            // Email Input
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Email ID *",
                 fontSize = 13.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
-            Spacer(modifier = Modifier.height(5.dp))
+            );
+            Spacer(modifier = Modifier.height(5.dp));
             TextField(
                 value = applicantEmailId,
-                onValueChange = { applicantEmailId = it },
+                onValueChange = { applicantEmailId = it; },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFFFA500))
                     .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true
-            )
+            );
 
-// Phone Number Input
+            // Phone Number Input
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Phone Number *",
                 fontSize = 13.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = applicantPhoneNumber,
-                onValueChange = { applicantPhoneNumber = it },
+                onValueChange = { applicantPhoneNumber = it; },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFFFA500))
                     .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 singleLine = true
-            )
+            );
 
-// Alternate Phone Number Input
+            // Alternate Phone Number Input
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Alternate Number",
                 fontSize = 13.sp,
                 style = MaterialTheme.typography.displayLarge,
                 modifier = Modifier.align(Alignment.Start)
-            )
+            );
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = alternateNumber ?: "",
-                onValueChange = { alternateNumber = it },
+                onValueChange = { alternateNumber = it; },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFFFFA500))
                     .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 singleLine = true
-            )
+            );
 
             // Confirm Button
             Spacer(modifier = modifier.height(20.dp))
@@ -398,7 +397,7 @@ fun ChildDetailsScreen(
                                 emailId = applicantEmailId,
                                 phoneNumber = applicantPhoneNumber,
                                 alternateNumber = alternateNumber
-                            )
+                            );
                         }
                 ) {
                     Row(
@@ -420,490 +419,8 @@ fun ChildDetailsScreen(
     }
 }
 
-
-
-
-//fun ChildDetailsScreen(
-//    modifier: Modifier = Modifier
-//) {
-//    val context = LocalContext.current
-//    val scrollState = rememberScrollState()
-//    var selectedImageUri by remember {
-//        mutableStateOf<Uri?>(null)
-//    }
-//    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
-//
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.GetContent()
-//    ) { uri ->
-//        selectedImageUri = uri
-//        uri?.let {
-//            try {
-//                val inputStream = context.contentResolver.openInputStream(it)
-//                val bitmap = BitmapFactory.decodeStream(inputStream)
-//                imageBitmap = bitmap.asImageBitmap()
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-//
-//    var childName by remember { mutableStateOf("") }
-//    var birthDate by remember { mutableStateOf("") }
-//    var applicantName by remember { mutableStateOf("") }
-//    var spouseName by remember { mutableStateOf("") }
-//    var applicantEmailId by remember { mutableStateOf("") }
-//    var applicantPhoneNumber by remember { mutableStateOf("") }
-//    var alternateNumber by remember { mutableStateOf("") }
-//
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        modifier = modifier
-//            .fillMaxSize()
-//            .background(Color.White)
-//            .verticalScroll(scrollState)
-//    ) {
-//        Image(
-//            painter = painterResource(R.drawable.logo),
-//            contentDescription = null,
-//            modifier = modifier
-//                .padding(top = 30.dp)
-//        )
-//        Spacer(modifier = Modifier.height(20.dp))
-//        Text(
-//            text = "Home Learning Made Easy",
-//            fontSize = 23.sp,
-//            fontWeight = FontWeight.Light,
-//            style = MaterialTheme.typography.displayLarge
-//        )
-//        Spacer(modifier = Modifier.height(40.dp))
-//        Box(
-//            modifier = modifier
-//                .fillMaxWidth()
-//                .background(Color(0xFFFFA500))
-//        ) {
-//            Text(
-//                text = "Add the details of one of your\n children for enrollment",
-//                fontSize = 20.sp,
-//                color = Color.Black,
-//                fontWeight = FontWeight.SemiBold,
-//                modifier = modifier
-//                    .align(Alignment.Center)
-//                    .padding(20.dp)
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(40.dp))
-//        Box(
-//            contentAlignment = Alignment.Center,
-//            modifier = modifier.fillMaxWidth()
-//        ) {
-//            Row(
-//                horizontalArrangement = Arrangement.Center,
-//                verticalAlignment = Alignment.CenterVertically,
-//                modifier = modifier.padding(horizontal = 10.dp)
-//            ) {
-//                Box(
-//                    modifier = modifier
-//                        .size(100.dp)
-//                        .border(3.dp, Color.Black, CircleShape)
-//                        .clip(CircleShape)
-//                        .background(Color(0xFFCBF5F1))
-//                        .clickable { launcher.launch("image/*") }
-//                ) {
-//                    imageBitmap?.let { bitmap ->
-//                        Image(
-//                            bitmap = bitmap,
-//                            contentDescription = null,
-//                            contentScale = ContentScale.Crop,
-//                            modifier = modifier.fillMaxSize()
-//                        )
-//                    } ?: run {
-//                        Image(
-//                            painter = painterResource(R.drawable.add_a_photo),
-//                            contentDescription = null,
-//                            modifier = modifier
-//                                .size(50.dp)
-//                                .align(Alignment.Center)
-//                        )
-//                    }
-//                }
-//                Column(
-//                    verticalArrangement = Arrangement.Center,
-//                    modifier = modifier.padding(start = 30.dp)
-//                ) {
-//                    Text(
-//                        text = "Child's Name",
-//                        fontSize = 13.sp,
-//                        style = MaterialTheme.typography.displayLarge,
-//                        modifier = Modifier
-//                            .align(Alignment.Start)
-//                    )
-//                    Spacer(modifier = Modifier.height(5.dp))
-//                    Box(
-//                        modifier = Modifier
-//                            .size(width = 250.dp, height = 50.dp)
-//                            .clip(RoundedCornerShape(10.dp))
-//                            .background(Color(0xFFFFA500))
-//                            .border(2.dp, Color.Black, RoundedCornerShape(10.dp))
-//                    ) {
-//                        TextField(
-//                            value = childName,
-//                            onValueChange = { childName = it },
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                focusedTextColor = Color.Black,
-//                                containerColor = Color(0xFFFFA500)
-//                            ),
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-//                            singleLine = true,
-//                            modifier = modifier.fillMaxWidth()
-//                        )
-//                    }
-//                    Spacer(modifier = modifier.height(20.dp))
-//                    Text(
-//                        text = "Child's Date of Birth",
-//                        fontSize = 13.sp,
-//                        style = MaterialTheme.typography.displayLarge,
-//                        modifier = Modifier.align(Alignment.Start)
-//                    )
-//                    Spacer(modifier = Modifier.height(5.dp))
-//                    Box(
-//                        modifier = Modifier
-//                            .size(width = 250.dp, height = 50.dp)
-//                            .clip(RoundedCornerShape(10.dp))
-//                            .background(Color(0xFFFFA500))
-//                            .border(2.dp, Color.Black, RoundedCornerShape(10.dp))
-//                    ) {
-//                        TextField(
-//                            value = birthDate,
-//                            onValueChange = { birthDate = it },
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                focusedTextColor = Color.Black,
-//                                containerColor = Color(0xFFFFA500)
-//                            ),
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-//                            singleLine = true,
-//                            modifier = modifier.fillMaxWidth()
-//                        )
-//                    }
-//                }
-//            }
-//        }
-//
-//        Spacer(modifier = modifier.height(30.dp))
-////        ParentDetails()
-//
-//        Box(
-//            modifier = modifier
-//                .fillMaxSize()
-//                .padding(end = 10.dp, bottom = 10.dp)
-//        ) {
-//            Box(
-//                modifier = Modifier
-//                    .size(width = 150.dp, height = 60.dp)
-//                    .clip(RoundedCornerShape(30.dp))
-//                    .background(Color(0xFFFFA500))
-//                    .border(2.dp, Color.Black, RoundedCornerShape(30.dp))
-//                    .align(Alignment.BottomEnd)
-//                    .clickable {
-//                        FirestoreService.uploadDetailsToFirestore(
-//                            context = context, // Passing context
-//                            childName = childName,
-//                            birthDate = birthDate,
-//                            parentName = applicantName,
-//                            spouseName = spouseName,
-//                            emailId = applicantEmailId,
-//                            phoneNumber = applicantPhoneNumber,
-//                            alternateNumber = alternateNumber
-//                        )
-//                    }
-//            ) {
-//                Row(
-//                    modifier = Modifier
-//                        .align(Alignment.Center)
-//                        .padding(horizontal = 10.dp)
-//                ) {
-//                    Text(
-//                        text = "Confirm",
-//                        fontSize = 18.sp,
-//                        color = Color.Black,
-//                        fontWeight = FontWeight.SemiBold,
-//                        modifier = modifier.padding(start = 10.dp, top = 4.dp)
-//                    )
-//                }
-//            }
-//        }
-
-
-//fun ParentDetails(
-//){
-//
-//    val text = "Fields with a \"*\" after them are mandatory"
-//    var applicantName by remember { mutableStateOf("") }
-//    var spouseName by remember { mutableStateOf("") }
-//    var applicantEmailId by remember { mutableStateOf("") }
-//    var applicantPhoneNumber by remember { mutableStateOf("") }
-//    var alternateNumber by remember { mutableStateOf("") }
-//
-//    Column(
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(start = 15.dp)
-//    ){
-//        Text(
-//            text = "Add your Details",
-//            fontSize = 22.sp,
-//            fontWeight = FontWeight.SemiBold,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier.align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(6.dp))
-//        Text(
-//            text = text,
-//            fontSize = 15.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier.align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(12.dp))
-//        Text(
-//            text = "Applicant Name *",
-//            fontSize = 13.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier
-//                .align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(5.dp))
-//        Box(
-//            modifier = Modifier
-//                .size(width = 350.dp, height = 55.dp)
-//                .clip(
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//                .background(Color(0xFFFFA500))
-//                .border(
-//                    2.dp,
-//                    Color.Black,
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//        ){
-//            TextField(
-//                value = applicantName,
-//                onValueChange = {
-//                    applicantName = it
-//                },
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-//                singleLine = true,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    //.background(Color(0xFFFFA500))
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(12.dp))
-//        Text(
-//            text = "Spouse's Name",
-//            fontSize = 13.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier
-//                .align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(5.dp))
-//        Box(
-//            modifier = Modifier
-//                .size(width = 350.dp, height = 55.dp)
-//                .clip(
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//                .background(Color(0xFFFFA500))
-//                .border(
-//                    2.dp,
-//                    Color.Black,
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//        ){
-//            TextField(
-//                value = spouseName,
-//                onValueChange = {
-//                    spouseName = it
-//                },
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-//                singleLine = true,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                //.background(Color(0xFFFFA500))
-//            )
-//        }
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//        Text(
-//            text = "Applicant's Email ID",
-//            fontSize = 13.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier
-//                .align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(5.dp))
-//        Box(
-//            modifier = Modifier
-//                .size(width = 350.dp, height = 55.dp)
-//                .clip(
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//                .background(Color(0xFFFFA500))
-//                .border(
-//                    2.dp,
-//                    Color.Black,
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//        ){
-//            TextField(
-//                value = applicantEmailId,
-//                onValueChange = {
-//                    applicantEmailId = it
-//                },
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-//                singleLine = true,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                //.background(Color(0xFFFFA500))
-//            )
-//        }
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//        Text(
-//            text = "Applicant's Phone Number *",
-//            fontSize = 13.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier
-//                .align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(5.dp))
-//        Box(
-//            modifier = Modifier
-//                .size(width = 350.dp, height = 55.dp)
-//                .clip(
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//                .background(Color(0xFFFFA500))
-//                .border(
-//                    2.dp,
-//                    Color.Black,
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//        ){
-//            TextField(
-//                value = applicantPhoneNumber,
-//                onValueChange = {
-//                    applicantPhoneNumber = it
-//                },
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-//                singleLine = true,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                //.background(Color(0xFFFFA500))
-//            )
-//        }
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//        Text(
-//            text = "Alternate Number",
-//            fontSize = 13.sp,
-//            style = MaterialTheme.typography.displayLarge,
-//            modifier = Modifier
-//                .align(Alignment.Start)
-//        )
-//        Spacer(modifier = Modifier.height(5.dp))
-//        Box(
-//            modifier = Modifier
-//                .size(width = 350.dp, height = 55.dp)
-//                .clip(
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//                .background(Color(0xFFFFA500))
-//                .border(
-//                    2.dp,
-//                    Color.Black,
-//                    RoundedCornerShape(
-//                        10.dp
-//                    )
-//                )
-//        ){
-//            TextField(
-//                value = alternateNumber,
-//                onValueChange = {
-//                    alternateNumber = it
-//                },
-//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-//                singleLine = true,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                //.background(Color(0xFFFFA500))
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(90.dp))
-//    }
-//}
-//
-
-//@Composable
-//fun UploadDetailsToFirestore(
-//    childName: String,
-//    birthDate: String,
-//    parentName: String,
-//    spouseName: String?,
-//    emailId: String,
-//    phoneNumber: String,
-//    alternateNumber: String?
-//) {
-//    val db = FirebaseFirestore.getInstance()
-//    val auth = FirebaseAuth.getInstance()
-//
-//    val child = Child(childName, birthDate)
-//    val parent = Parent(parentName, spouseName, emailId, phoneNumber, alternateNumber)
-//
-//    val userId = auth.currentUser?.uid ?: return
-//
-//    // Create a reference to the Firestore document
-//    val childRef = db.collection("users").document(userId).collection("children").document(childName)
-//    val parentRef = db.collection("users").document(userId).collection("parents").document(parentName)
-//
-//    // Upload child and parent details to Firestore
-//    childRef.set(child)
-//        .addOnSuccessListener {
-//            Log.d("Firestore", "Child details added successfully")
-//        }
-//        .addOnFailureListener { e ->
-//            Log.e("Firestore", "Error adding child details", e)
-//        }
-//
-//    parentRef.set(parent)
-//        .addOnSuccessListener {
-//            Log.d("Firestore", "Parent details added successfully")
-//        }
-//        .addOnFailureListener { e ->
-//            Log.e("Firestore", "Error adding parent details", e)
-//        }
-//}
-
 @Preview(showBackground = true)
 @Composable
-fun ChildDetailsScreenPreview(){
+fun ChildDetailsScreenPreview() {
     ChildDetailsScreen()
 }

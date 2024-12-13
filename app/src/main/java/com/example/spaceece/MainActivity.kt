@@ -23,40 +23,36 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
         setContent {
-//routes
+            //routes
             val navController = rememberNavController()
             SpaceECETheme {
                 NavHost(
-                    navController = navController ,
+                    navController = navController,
                     startDestination = Screens.SplashScreen.name
                 ) {
-
-                    composable(route = Screens.SplashScreen.name){
+                    composable(route = Screens.SplashScreen.name) {
                         SplashScreen(
                             onLanguageButtonClicked = {},
                             onDefaultLanguageClicked = {},
                             onNextButtonClicked = {
                                 navController.navigate(Screens.SelectRoleScreen.name)
-
                             }
                         )
                     }
-
-                    composable(route = Screens.SelectRoleScreen.name){
+                    composable(route = Screens.SelectRoleScreen.name) {
                         SelectRoleScreen(
                             onBackLanguageClicked = {
                                 navController.popBackStack()
                             },
-                            onBeginButtonClicked = {selectedRole ->
-                                when(selectedRole){
+                            onBeginButtonClicked = { selectedRole ->
+                                when (selectedRole) {
                                     "Parent" -> navController.navigate(Screens.AuthScreen.name)
                                     "Champion" -> navController.navigate(Screens.ChampionLoginScreen.name)
                                 }
                             },
                         )
                     }
-
-                    composable(route = Screens.AuthScreen.name){
+                    composable(route = Screens.AuthScreen.name) {
                         AuthScreen(
                             onLoginSuccessful = {
                                 navController.navigate(Screens.ChildDetailsScreen.name)
@@ -66,8 +62,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
-
-                    composable(route = Screens.ConfirmOtpScreen.name){
+                    composable(route = Screens.ConfirmOtpScreen.name) {
                         ConfirmOtpScreen(
                             onRegistrationSuccessful = {
                                 navController.navigate(Screens.ChildDetailsScreen.name)
@@ -77,30 +72,27 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
-
                     composable(route = Screens.ChildDetailsScreen.name) {
                         ChildDetailsScreen()
                     }
-
                     composable(route = Screens.ChampionLoginScreen.name) {
                         ChampionLoginScreen(
-                            onLoginButtonClicked = { navController.navigate(Screens.ChampionDashboardScreen.name) },
+                            onLoginButtonClicked = {
+                                navController.navigate(Screens.ChampionDashboardScreen.name)
+                            },
                             onForgotPasswordClicked = {}
                         )
                     }
-
                     composable(route = Screens.ChampionDashboardScreen.name) {
                         ChampionDashboard()
                     }
-
                 }
-
             }
         }
     }
 }
 
-enum class Screens{
+enum class Screens {
     SplashScreen,
     SelectRoleScreen,
     AuthScreen,
