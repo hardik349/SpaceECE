@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         FirebaseApp.initializeApp(this)
         setContent {
-
+//routes
             val navController = rememberNavController()
             SpaceECETheme {
                 NavHost(
